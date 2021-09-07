@@ -1,8 +1,16 @@
 from typing import Optional
 from fastapi import FastAPI
+from fastapi_utils.tasks import repeat_every
 from datetime import datetime
+from data_fetcher import fetch_data
 
 app = FastAPI()
+
+
+@app.on_event("startup")
+@repeat_every(seconds=10)
+def startup_event():
+    fetch_data()
 
 
 @app.get("/current-status")

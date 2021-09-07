@@ -9,10 +9,12 @@ setup_logging()
 LOGGER = logging.getLogger(__name__)
 
 def fetch_data():
+    """
     repsonse = requests.get(URL)
     if repsonse.status_code != 200:
         LOGGER.error("Failed to fetch current status")
         return
     # TODO: Save data in db, we should only save if status changed.
     LOGGER.info(repsonse.json())
-fetch_data()
+    """
+    LOGGER.info("Fetching data")
