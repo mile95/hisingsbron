@@ -1,8 +1,16 @@
 from typing import Optional
+
 from fastapi import FastAPI
 from fastapi_utils.tasks import repeat_every
+from logger import setup_logging
 from datetime import datetime
 from data_fetcher import fetch_data
+import models
+from database import engine
+
+models.Base.metadata.create_all(bind=engine)
+
+setup_logging()
 
 app = FastAPI()
 
@@ -20,6 +28,7 @@ def get_current_status():
     """
     return {"Status": "Open"}
 
+
 @app.get("/history")
 def get_history(from_date: datetime, to_date: datetime):
     # Example 2021-09-05T18:19:04Z
@@ -27,4 +36,4 @@ def get_history(from_date: datetime, to_date: datetime):
     """
     TODO: Get entries between from_date and to_date from database
     """
-    return {"fakedata":"fakedata"}
+    return {"fakedata": "fakedata"}
