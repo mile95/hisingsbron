@@ -3,24 +3,36 @@ import logging
 import crud
 from database import SessionLocal
 import datetime
+from random import randrange
 
 URL = "https://n400itshfa000002-development-apim.azure-api.net/RoadSignals?subscription-key=ce34027e127f4566b931cdfcc5136f0f"
 
 LOGGER = logging.getLogger(__name__)
 
+LATEST_STATUS = None
+
 
 def fetch_data():
+    global LATEST_STATUS
     """
     repsonse = requests.get(URL)
     if repsonse.status_code != 200:
         LOGGER.error("Failed to fetch current status")
         return
-    # TODO: Save data in db, we should only save if status changed.
     LOGGER.info(repsonse.json())
     """
     LOGGER.info("Fetching data")
-    db = SessionLocal()
     timestamp = datetime.datetime.now()
-    status = "Open"
-    crud.store_status(db=db, timestamp=timestamp, status=status)
-    LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
+    status = generate_fake_data()
+    if status != LATEST_STATUS:
+        crud.store_status(db=SessionLocal(), timestamp=timestamp, status=status)
+        LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
+        LATEST_STATUS = status
+    else:
+        LOGGER.info("Ignored storing, no status change.")
+
+
+def generate_fake_data():
+    if randrange(10) < 3:
+        return "Closed"
+    return "Open"

@@ -4,6 +4,7 @@ from fastapi import FastAPI, Depends
 from fastapi_utils.tasks import repeat_every
 from sqlalchemy.orm import Session
 from logger import setup_logging
+import asyncio
 from datetime import date
 from data_fetcher import fetch_data
 import models
@@ -13,6 +14,8 @@ import crud
 models.Base.metadata.create_all(bind=engine)
 setup_logging()
 
+# Make sure to raise exception that happens outside the main thread.
+asyncio.get_running_loop().set_exception_handler(None)
 
 # Dependency
 def get_db():
@@ -27,7 +30,7 @@ app = FastAPI()
 
 
 @app.on_event("startup")
-@repeat_every(seconds=10)
+@repeat_every(seconds=10, raise_exceptions=True)
 def startup_event():
     fetch_data()
 
