@@ -1,14 +1,12 @@
 import requests
 import logging
-from fastapi import Depends
 import crud
 from database import SessionLocal
-import time
+import datetime
 
 URL = "https://n400itshfa000002-development-apim.azure-api.net/RoadSignals?subscription-key=ce34027e127f4566b931cdfcc5136f0f"
 
 LOGGER = logging.getLogger(__name__)
-
 
 def fetch_data():
     """
@@ -21,7 +19,7 @@ def fetch_data():
     """
     LOGGER.info("Fetching data")
     db = SessionLocal()
-    timestamp = str(time.time() * 1000)
+    timestamp = datetime.datetime.now()
     status = "Open"
     crud.store_status(db=db, timestamp=timestamp, status=status)
     LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")

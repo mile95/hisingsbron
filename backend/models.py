@@ -1,5 +1,5 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from sqlalchemy.sql.sqltypes import Date
+from sqlalchemy import Column, String
+from sqlalchemy.sql.sqltypes import DateTime
 
 from database import Base
 
@@ -7,5 +7,5 @@ from database import Base
 class Status(Base):
     __tablename__ = "status"
 
-    timestamp = Column(String, primary_key=True)
+    timestamp = Column(DateTime, primary_key=True)
     status = Column(String)
