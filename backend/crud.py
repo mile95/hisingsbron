@@ -9,3 +9,7 @@ def store_status(db: Session, timestamp: str, status: str):
     db.commit()
     db.refresh(db_status)
     return db_status
+
+
+def get_latest_status(db: Session):
+    return db.query(models.Status).order_by(models.Status.timestamp.desc()).first()

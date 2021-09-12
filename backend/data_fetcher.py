@@ -8,6 +8,7 @@ URL = "https://n400itshfa000002-development-apim.azure-api.net/RoadSignals?subsc
 
 LOGGER = logging.getLogger(__name__)
 
+
 def fetch_data():
     """
     repsonse = requests.get(URL)

@@ -1,16 +1,27 @@
 from typing import Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi_utils.tasks import repeat_every
+from sqlalchemy.orm import Session
 from logger import setup_logging
 from datetime import datetime
 from data_fetcher import fetch_data
 import models
-from database import engine
+from database import engine, SessionLocal
+import crud
 
 models.Base.metadata.create_all(bind=engine)
-
 setup_logging()
+
+
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 
 app = FastAPI()
 
@@ -22,11 +33,8 @@ def startup_event():
 
 
 @app.get("/current-status")
-def get_current_status():
-    """
-    TODO: Get latest entry from database
-    """
-    return {"Status": "Open"}
+def get_current_status(db: Session = Depends(get_db)):
+    return crud.get_latest_status(db=db)
 
 
 @app.get("/history")
