@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends
 from fastapi_utils.tasks import repeat_every
 from sqlalchemy.orm import Session
 from logger import setup_logging
-from datetime import datetime
+from datetime import date
 from data_fetcher import fetch_data
 import models
 from database import engine, SessionLocal
@@ -38,10 +38,7 @@ def get_current_status(db: Session = Depends(get_db)):
 
 
 @app.get("/history")
-def get_history(from_date: datetime, to_date: datetime):
+def get_history(from_date: date, to_date: date, db: Session = Depends(get_db)):
     # Example 2021-09-05T18:19:04Z
     # Example 2021-09-05T20:19:04+02:00
-    """
-    TODO: Get entries between from_date and to_date from database
-    """
-    return {"fakedata": "fakedata"}
+    return crud.get_history_between_dates(db=db, from_date=from_date, to_date=to_date)
