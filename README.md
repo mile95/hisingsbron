@@ -1,4 +1,4 @@
-# Hissing Bridge
+# Hissingsbron
 
 ## Frontend
 
