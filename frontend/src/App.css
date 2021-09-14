@@ -1,3 +1,4 @@
+
 /* https://colorhunt.co/palette/222831393e4600adb5eeeeee */
 
 .App {
@@ -34,4 +35,25 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: #EEEEEE;
+}
+
+.App-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.App-button {
+  background-color: #393E46;
+  color: #EEEEEE;
+  min-width: 10vh;
+  min-height: 2vh;
+  margin: 10px;
+}
+
+.App-button-selected {
+  background-color: #00ADB5;
+  color: #EEEEEE;
+  min-width: 10vh;
+  min-height: 2vh;
+  margin: 10px;
 }

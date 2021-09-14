@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      interval: "day"
+      interval: "24h"
     };
     this.getStatus()
       .then(response => response.json())
@@ -86,6 +86,12 @@ class App extends React.Component {
               strokeWidth={3}
             />
           </LineChart>
+          </div>
+          <div className="App-buttons">
+            <button className={this.state.interval === "24h" ? "App-button-selected" : "App-button" }> 24h </button>
+            <button className={this.state.interval === "week" ? "App-button-selected" : "App-button" }> Vecka </button>
+            <button className={this.state.interval === "month" ? "App-button-selected" : "App-button" }> Månad </button>
+            <button className={this.state.interval === "custom" ? "App-button-selected" : "App-button" }> Custom </button>
           </div>
         </body>
         <footer></footer>
