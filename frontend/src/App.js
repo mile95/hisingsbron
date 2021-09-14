@@ -49,6 +49,12 @@ class App extends React.Component {
     }) 
   }
 
+  changeIntervalState(newInterval) {
+    this.setState({
+      interval: newInterval
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -88,10 +94,10 @@ class App extends React.Component {
           </LineChart>
           </div>
           <div className="App-buttons">
-            <button className={this.state.interval === "24h" ? "App-button-selected" : "App-button" }> 24h </button>
-            <button className={this.state.interval === "week" ? "App-button-selected" : "App-button" }> Vecka </button>
-            <button className={this.state.interval === "month" ? "App-button-selected" : "App-button" }> Månad </button>
-            <button className={this.state.interval === "custom" ? "App-button-selected" : "App-button" }> Custom </button>
+            <button className={this.state.interval === "24h" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("24h")}> 24h </button>
+            <button className={this.state.interval === "week" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("week")}> Vecka </button>
+            <button className={this.state.interval === "month" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("month")}> Månad </button>
+            <button className={this.state.interval === "custom" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("custom")}> Custom </button>
           </div>
         </body>
         <footer></footer>
