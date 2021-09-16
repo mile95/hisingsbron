@@ -14,11 +14,6 @@ class App extends React.Component {
       .then(data => this.setState({
         status: data.status
       }));
-    this.fetchDataBetweenDates('2021-09-11', '2021-09-13')
-      .then(response => response.json())
-      .then(data => this.setState({
-        data: data
-      }));
   }
   
   getStatus() {
@@ -36,7 +31,7 @@ class App extends React.Component {
   }
 
   fetchDataBetweenDates(fromDate, toDate) {
-    return fetch("http://localhost:8000/history?from_date=" + fromDate + "&to_date=" + toDate, {
+    fetch("http://localhost:8000/history?from_date=" + fromDate + "&to_date=" + toDate, {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -46,13 +41,31 @@ class App extends React.Component {
       },
       redirect: 'follow', // manual, *follow, error
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    }) 
+    }).then(response => response.json())
+      .then(data => this.setState({
+        data: data
+      }));
   }
 
   changeIntervalState(newInterval) {
     this.setState({
       interval: newInterval
     })
+    var currentDate = new Date()
+    currentDate.setDate(currentDate.getDate() + 1)
+    var dateInHistory = new Date()
+
+    if (this.state.interval === "24h") {
+      dateInHistory.setDate(new Date().getDate())
+    } else if (this.state.interval === "week") {
+      dateInHistory.setDate(new Date().getDate() - 7)
+    } else if (this.state.interval === "month") {
+      dateInHistory.setDate(new Date().getMonth() - 1)
+    }
+    this.fetchDataBetweenDates(
+      dateInHistory.toJSON().slice(0,10).replace(/-/g,'-'),
+      currentDate.toJSON().slice(0,10).replace(/-/g,'-')
+    )
   }
 
   render() {
@@ -75,6 +88,7 @@ class App extends React.Component {
           >
             <XAxis 
               dataKey="timestamp"
+              tickFormatter={formatXAxis}
               tick={{stroke: '#EEEEEE', fontSize: 15, strokeWidth: 0.5}}
               padding={{ left: 40, right: 40 }}
               axisLine={{ stroke: '#EAF0F4' }}
@@ -97,13 +111,16 @@ class App extends React.Component {
             <button className={this.state.interval === "24h" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("24h")}> 24h </button>
             <button className={this.state.interval === "week" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("week")}> Vecka </button>
             <button className={this.state.interval === "month" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("month")}> Månad </button>
-            <button className={this.state.interval === "custom" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("custom")}> Custom </button>
           </div>
         </body>
         <footer></footer>
       </div>
     )
   }
+}
+
+function formatXAxis(tickItem) {
+  return String(tickItem).replace(/T/, ' ').replace(/\..+/, '').split(" ")[0]
 }
 
 export default App;
