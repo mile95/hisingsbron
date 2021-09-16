@@ -78,7 +78,7 @@ class App extends React.Component {
         </header>
         <body className="App-body">
           <div>
-            <p> Nuvarande status: {this.state.status} </p>
+            <p> Nuvarande status: {translateStatus(this.state.status)} </p>
           </div>
           <div className="App-graph">
           <LineChart
@@ -95,6 +95,7 @@ class App extends React.Component {
             />
             <YAxis
               type="category"
+              tickFormatter={translateStatus}
               padding={{ top: 40, bottom: 40 }}
               tick={{stroke: '#EEEEEE', fontSize: 15, strokeWidth: 0.5}}
               axisLine={{ stroke: '#EAF0F4' }}
@@ -121,6 +122,10 @@ class App extends React.Component {
 
 function formatXAxis(tickItem) {
   return String(tickItem).replace(/T/, ' ').replace(/\..+/, '').split(" ")[0]
+}
+
+function translateStatus(status) {
+  return String(status) === "Open" ? "Öppen" : "Stängd"
 }
 
 export default App;
