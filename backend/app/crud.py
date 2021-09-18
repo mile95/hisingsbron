@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from datetime import date
 
-import models
+import app.models as models
 
 
 def store_status(db: Session, timestamp: str, status: str):

@@ -1,7 +1,7 @@
 import requests
 import logging
-import crud
-from database import SessionLocal
+import app.crud as crud
+from app.database import SessionLocal
 import datetime
 from random import randrange
 

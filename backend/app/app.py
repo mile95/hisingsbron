@@ -4,15 +4,15 @@ from fastapi import FastAPI, Depends
 from fastapi_utils.tasks import repeat_every
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from logger import setup_logging
+from app.logger import setup_logging
 import asyncio
 from datetime import date
-from data_fetcher import fetch_data
-import models
-from database import engine, SessionLocal
-import crud
+from app.data_fetcher import fetch_data
+import app.models
+from app.database import engine, SessionLocal
+import app.crud
 
-models.Base.metadata.create_all(bind=engine)
+app.models.Base.metadata.create_all(bind=engine)
 setup_logging()
 
 # Make sure to raise exception that happens outside the main thread.
