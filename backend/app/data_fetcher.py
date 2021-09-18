@@ -1,7 +1,7 @@
 import requests
 import logging
-import app.crud as crud
-from app.database import SessionLocal
+from crud import store_status
+from database import SessionLocal
 import datetime
 from random import randrange
 
@@ -25,7 +25,7 @@ def fetch_data():
     timestamp = datetime.datetime.now()
     status = generate_fake_data()
     if status != LATEST_STATUS:
-        crud.store_status(db=SessionLocal(), timestamp=timestamp, status=status)
+        store_status(db=SessionLocal(), timestamp=timestamp, status=status)
         LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
         LATEST_STATUS = status
     else:

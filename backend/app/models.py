@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String
 from sqlalchemy.sql.sqltypes import DateTime
 
-from app.database import Base
+from database import Base
 
 
 class Status(Base):
