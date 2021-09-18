@@ -24,7 +24,7 @@ uvicorn main:app --reload
 
 ### Frontend
 
-````
+```
 cd frontend
 docker build -t frontend:dev .
 docker run
@@ -44,5 +44,5 @@ Visible on 127.0.0.1:3001
 ```
 cd backend
 docker build -t backend:dev .
-docker run -d --name backendcontainer .p 80:80 backend:dev
+docker run -d --name backendcontainer -p 80:80 backend:dev
 ```

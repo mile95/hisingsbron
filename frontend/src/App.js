@@ -3,7 +3,10 @@ import { LineChart, XAxis, YAxis, Line } from 'recharts';
 import React from 'react';
 
 
+let URL = String(process.env.BACKEND_URL);
+
 class App extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +20,7 @@ class App extends React.Component {
   }
   
   getStatus() {
-    return fetch("http://localhost:8000/current-status", {
+    return fetch(URL + "/current-status", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -31,7 +34,7 @@ class App extends React.Component {
   }
 
   fetchDataBetweenDates(fromDate, toDate) {
-    fetch("http://localhost:8000/history?from_date=" + fromDate + "&to_date=" + toDate, {
+    fetch(URL + "/history?from_date=" + fromDate + "&to_date=" + toDate, {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

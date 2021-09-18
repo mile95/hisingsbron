@@ -1,0 +1,17 @@
+services:
+  frontend:
+    build: frontend
+    ports:
+      - "3001:3000"
+    volumes:
+      - ${PWD}:/frontend/app
+      - /frontend/app/node_modules
+    environment: 
+      - CHOKIDAR_USEPOLLING=true
+      - BACKEND_URL=127.0.0.1:80
+  backend:
+    build: backend
+    ports:
+      - "80:80"
+volumes:
+  logvolume01: {}

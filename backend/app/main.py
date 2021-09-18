@@ -16,7 +16,7 @@ Base.metadata.create_all(bind=engine)
 setup_logging()
 
 # Make sure to raise exception that happens outside the main thread.
-# asyncio.get_running_loop().set_exception_handler(None)
+asyncio.get_running_loop().set_exception_handler(None)
 
 # Dependency
 def get_db():
