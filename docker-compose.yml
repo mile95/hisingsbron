@@ -1,6 +1,9 @@
 services:
   frontend:
-    build: frontend
+    build:
+      context: frontend
+      args:
+        REACT_APP_HOST_IP_ADDRESS: 127.0.0.1:80
     ports:
       - "3001:3000"
     volumes:
@@ -8,10 +11,11 @@ services:
       - /frontend/app/node_modules
     environment: 
       - CHOKIDAR_USEPOLLING=true
-      - BACKEND_URL=127.0.0.1:80
   backend:
     build: backend
     ports:
       - "80:80"
+    environment: 
+      - MAX_WORKERS=1
 volumes:
   logvolume01: {}

@@ -15,8 +15,6 @@ from crud import get_history_between_dates, get_latest_status
 Base.metadata.create_all(bind=engine)
 setup_logging()
 
-# Make sure to raise exception that happens outside the main thread.
-asyncio.get_running_loop().set_exception_handler(None)
 
 # Dependency
 def get_db():
@@ -46,7 +44,7 @@ app.add_middleware(
 
 
 @app.on_event("startup")
-@repeat_every(seconds=60, raise_exceptions=True)
+@repeat_every(seconds=10, raise_exceptions=True)
 def startup_event():
     fetch_data()
 

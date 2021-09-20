@@ -22,6 +22,9 @@ uvicorn main:app --reload
 
 ## Run it using Docker
 
+### Using Docker Compose
+
+
 ### Frontend
 
 ```

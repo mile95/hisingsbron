@@ -3,11 +3,12 @@ import { LineChart, XAxis, YAxis, Line } from 'recharts';
 import React from 'react';
 
 
-let URL = String(process.env.BACKEND_URL);
+let URL = String(process.env.REACT_APP_HOST_IP_ADDRESS);
 
 class App extends React.Component {
 
   constructor(props) {
+    console.log(URL)
     super(props);
     this.state = {
       interval: "24h"
