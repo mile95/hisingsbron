@@ -8,7 +8,6 @@ let URL = String(process.env.REACT_APP_HOST_IP_ADDRESS);
 class App extends React.Component {
 
   constructor(props) {
-    console.log(URL)
     super(props);
     this.state = {
       interval: "24h"
@@ -18,6 +17,7 @@ class App extends React.Component {
       .then(data => this.setState({
         status: data.status
       }));
+    this.changeIntervalState("24h");
   }
   
   getStatus() {
@@ -93,16 +93,22 @@ class App extends React.Component {
             <XAxis 
               dataKey="timestamp"
               tickFormatter={formatXAxis}
-              tick={{stroke: '#EEEEEE', fontSize: 15, strokeWidth: 0.5}}
               padding={{ left: 40, right: 40 }}
-              axisLine={{ stroke: '#EAF0F4' }}
+              style={{
+                fontSize: '0.8rem',
+                fontFamily: "Roboto, sans-serif",
+                fill: "white"
+            }}
             />
             <YAxis
               type="category"
               tickFormatter={translateStatus}
               padding={{ top: 40, bottom: 40 }}
-              tick={{stroke: '#EEEEEE', fontSize: 15, strokeWidth: 0.5}}
-              axisLine={{ stroke: '#EAF0F4' }}
+              style={{
+                fontSize: '0.8rem',
+                fontFamily: "Roboto, sans-serif",
+                fill: "white"
+            }}
             />
             <Line 
               type="stepAfter" 

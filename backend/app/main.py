@@ -5,7 +5,6 @@ from fastapi_utils.tasks import repeat_every
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from logger import setup_logging
-import asyncio
 from datetime import date
 from data_fetcher import fetch_data
 from models import Base

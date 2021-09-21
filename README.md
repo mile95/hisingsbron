@@ -7,7 +7,7 @@
 ```
 cd frontend
 npm install
-npm start
+REACT_APP_HOST_IP_ADDRESS=http://localhost:8000 npm start
 ```
 
 ### Backend
@@ -23,7 +23,6 @@ uvicorn main:app --reload
 ## Run it using Docker
 
 ### Using Docker Compose
-
 
 ### Frontend
 
