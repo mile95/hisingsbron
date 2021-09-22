@@ -47,7 +47,7 @@ class App extends React.Component {
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     }).then(response => response.json())
       .then(data => this.setState({
-        data: data
+        data: data.map(convertToMilis)
       }));
   }
 
@@ -66,6 +66,7 @@ class App extends React.Component {
     } else if (this.state.interval === "month") {
       dateInHistory.setDate(new Date().getMonth() - 1)
     }
+
     this.fetchDataBetweenDates(
       dateInHistory.toJSON().slice(0,10).replace(/-/g,'-'),
       currentDate.toJSON().slice(0,10).replace(/-/g,'-')
@@ -92,7 +93,10 @@ class App extends React.Component {
           >
             <XAxis 
               dataKey="timestamp"
-              tickFormatter={formatXAxis}
+              type='number'
+              scale='time'
+              domain = {['auto', 'auto']}
+              tickFormatter={unix => formatXAxis(unix, this.state.interval) }
               padding={{ left: 40, right: 40 }}
               style={{
                 fontSize: '0.8rem',
@@ -130,12 +134,28 @@ class App extends React.Component {
   }
 }
 
-function formatXAxis(tickItem) {
-  return String(tickItem).replace(/T/, ' ').replace(/\..+/, '').split(" ")[0]
+function formatXAxis(tickItem, interval) {
+  var date = new Date(tickItem)
+  var formattedDate = ""
+  if (interval === "24h") {
+    formattedDate = date.getHours() + ':' + date.getMinutes();
+  }
+  else {
+    formattedDate = (date.getMonth() + 1)+ '/' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
+  }
+  return String(formattedDate)
 }
 
 function translateStatus(status) {
   return String(status) === "Open" ? "Öppen" : "Stängd"
+}
+
+function convertToMilis(entry) {
+  var date = new Date(entry.timestamp)
+  return {
+    timestamp: date.getTime(),
+    status: entry.status
+  }
 }
 
 export default App;
