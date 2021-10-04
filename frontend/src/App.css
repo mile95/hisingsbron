@@ -62,7 +62,8 @@
   font-size: 18px;
   font-weight: 100;
   letter-spacing: 1px;
-  padding: 13px 40px 13px;
+  padding: 13px 20px 13px;
+  margin: 10px;
   outline: 0;
   border: 1px solid #00ADB5;
   cursor: pointer;

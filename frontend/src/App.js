@@ -3,7 +3,8 @@ import { LineChart, XAxis, YAxis, Line } from 'recharts';
 import React from 'react';
 
 
-let URL = String(process.env.REACT_APP_HOST_IP_ADDRESS);
+// let URL = String(process.env.REACT_APP_HOST_IP_ADDRESS);
+let URL = "http://127.0.0.1:8000"
 
 class App extends React.Component {
 
@@ -59,12 +60,12 @@ class App extends React.Component {
     currentDate.setDate(currentDate.getDate() + 1)
     var dateInHistory = new Date()
 
-    if (this.state.interval === "24h") {
+    if (newInterval === "24h") {
       dateInHistory.setDate(new Date().getDate())
-    } else if (this.state.interval === "week") {
+    } else if (newInterval === "week") {
       dateInHistory.setDate(new Date().getDate() - 7)
-    } else if (this.state.interval === "month") {
-      dateInHistory.setDate(new Date().getMonth() - 1)
+    } else if (newInterval === "month") {
+      dateInHistory.setMonth(new Date().getMonth() - 1)
     }
 
     this.fetchDataBetweenDates(
@@ -78,12 +79,12 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <h1>
-            Hissingsbron
+            Hissingsbron,
           </h1>
         </header>
         <body className="App-body">
           <div>
-            <p> Nuvarande status: {translateStatus(this.state.status)} </p>
+            <h3> ÄR JUST NU ... {translateStatus(this.state.status)} </h3>
           </div>
           <div className="App-graph">
           <LineChart
