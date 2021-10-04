@@ -20,6 +20,16 @@ class App extends React.Component {
       }));
     this.changeIntervalState("24h");
   }
+
+  /*
+  componentDidMount() {
+    this.fetchInterval = setInterval(this.getStatus, 60000); // <- time in ms
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+  */
   
   getStatus() {
     return fetch(URL + "/current-status", {
@@ -37,15 +47,15 @@ class App extends React.Component {
 
   fetchDataBetweenDates(fromDate, toDate) {
     fetch(URL + "/history?from_date=" + fromDate + "&to_date=" + toDate, {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *same-origin, omit
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       },
-      redirect: 'follow', // manual, *follow, error
-      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
     }).then(response => response.json())
       .then(data => this.setState({
         data: data.map(convertToMilis)
@@ -84,7 +94,7 @@ class App extends React.Component {
         </header>
         <body className="App-body">
           <div>
-            <h3> ÄR JUST NU ... {translateStatus(this.state.status)} </h3>
+            <h3> ÄR JUST NU... {translateStatus(this.state.status)}! </h3>
           </div>
           <div className="App-graph">
           <LineChart
@@ -129,7 +139,10 @@ class App extends React.Component {
             <button className={this.state.interval === "month" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("month")}> Månad </button>
           </div>
         </body>
-        <footer></footer>
+        <footer className="App-footer">
+          <p>Created by Fredrik Mile, 2021</p>
+          <a href="https://github.com/mile95/hissingsbron">Source code available on Github!</a> 
+        </footer>
       </div>
     )
   }
