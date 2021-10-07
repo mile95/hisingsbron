@@ -11,17 +11,15 @@
 }
 
 .App-header {
-  min-height: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(20px + 2vmin);
-  color: #00ADB5;
+  color: #EEEEEE;
 }
 
 .App-body {
-  min-height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,11 +70,10 @@
 }
 
 .App-footer {
-  position:fixed;
-  left:0px;
-  bottom:10px;
-  width:100%;
-  text-decoration: none;
+  position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px; 
 }
 
 .App-footer p {

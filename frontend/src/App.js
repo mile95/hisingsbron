@@ -1,5 +1,5 @@
 import './App.css';
-import { LineChart, XAxis, YAxis, Line } from 'recharts';
+import { LineChart, XAxis, YAxis, Line, ResponsiveContainer } from 'recharts';
 import React from 'react';
 
 
@@ -20,16 +20,6 @@ class App extends React.Component {
       }));
     this.changeIntervalState("24h");
   }
-
-  /*
-  componentDidMount() {
-    this.fetchInterval = setInterval(this.getStatus, 60000); // <- time in ms
-  }
-  
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-  */
   
   getStatus() {
     return fetch(URL + "/current-status", {
@@ -88,18 +78,13 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>
-            Hissingsbron,
-          </h1>
+          <h2>Hissingsbron</h2>
         </header>
         <body className="App-body">
-          <div>
-            <h3> ÄR JUST NU... {translateStatus(this.state.status)}! </h3>
-          </div>
           <div className="App-graph">
           <LineChart
-            width={600}
-            height={300}
+            width={900}
+            height={450}
             data={this.state.data}
           >
             <XAxis 
@@ -109,6 +94,7 @@ class App extends React.Component {
               domain = {['auto', 'auto']}
               tickFormatter={unix => formatXAxis(unix, this.state.interval) }
               padding={{ left: 40, right: 40 }}
+              stroke="black"
               style={{
                 fontSize: '0.8rem',
                 fontFamily: "Roboto, sans-serif",
@@ -117,6 +103,7 @@ class App extends React.Component {
             />
             <YAxis
               type="category"
+              stroke="black"
               tickFormatter={translateStatus}
               padding={{ top: 40, bottom: 40 }}
               style={{
