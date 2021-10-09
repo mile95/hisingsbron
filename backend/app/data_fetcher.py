@@ -1,7 +1,6 @@
 import requests
 import logging
 from crud import store_status
-from database import SessionLocal
 import datetime
 from random import randrange
 
@@ -12,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 LATEST_STATUS = None
 
 
-def fetch_data():
+def fetch_data(db):
     global LATEST_STATUS
     """
     repsonse = requests.get(URL)
@@ -25,7 +24,7 @@ def fetch_data():
     timestamp = datetime.datetime.now()
     status = generate_fake_data()
     if status != LATEST_STATUS:
-        store_status(db=SessionLocal(), timestamp=timestamp, status=status)
+        store_status(db=next(db), timestamp=timestamp, status=status)
         LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
         LATEST_STATUS = status
     else:

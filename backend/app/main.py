@@ -45,7 +45,7 @@ app.add_middleware(
 @app.on_event("startup")
 @repeat_every(seconds=60, raise_exceptions=True)
 def startup_event():
-    fetch_data()
+    fetch_data(get_db())
 
 
 @app.get("/current-status")
