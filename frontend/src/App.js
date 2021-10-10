@@ -1,5 +1,5 @@
 import './App.css';
-import { LineChart, XAxis, YAxis, Line, ResponsiveContainer } from 'recharts';
+import { LineChart, XAxis, YAxis, Line } from 'recharts';
 import React from 'react';
 
 
@@ -14,9 +14,9 @@ class App extends React.Component {
       interval: "24h"
     };
     this.getStatus()
-      .then(response => response.json())
+      .then(response => response === "undefined" ? response.json() : undefined)
       .then(data => this.setState({
-        status: data.status
+        status: data === "undefined" ? data.status : "N/A"
       }));
     this.changeIntervalState("24h");
   }
@@ -33,6 +33,9 @@ class App extends React.Component {
       redirect: 'follow', // manual, *follow, error
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     })
+    .catch(error => {
+      console.log("Failed to fetch data.")
+    });
   }
 
   fetchDataBetweenDates(fromDate, toDate) {
@@ -49,7 +52,10 @@ class App extends React.Component {
     }).then(response => response.json())
       .then(data => this.setState({
         data: data.map(convertToMilis)
-      }));
+      }))
+      .catch(error => {
+        console.log("Failed to fetch data.")
+      });
   }
 
   changeIntervalState(newInterval) {
@@ -81,6 +87,7 @@ class App extends React.Component {
           <h2>Hissingsbron</h2>
         </header>
         <body className="App-body">
+          <p className="Warning-text">Tyvärr är brostatusen inte tillgänglig än, förhoppningsvis släpps den inom kort!</p>
           <div className="App-graph">
           <LineChart
             width={900}
@@ -148,7 +155,12 @@ function formatXAxis(tickItem, interval) {
 }
 
 function translateStatus(status) {
-  return String(status) === "Open" ? "Öppen" : "Stängd"
+  if (status === "Open") {
+    return "Öppen"
+  } else if (status === "Closed") {
+    return "Closed"
+  }
+  return "N/A"
 }
 
 function convertToMilis(entry) {
