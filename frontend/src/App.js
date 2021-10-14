@@ -1,5 +1,5 @@
 import './App.css';
-import { LineChart, XAxis, YAxis, Line } from 'recharts';
+import { LineChart, XAxis, YAxis, Line, ResponsiveContainer } from 'recharts';
 import React from 'react';
 
 
@@ -89,43 +89,45 @@ class App extends React.Component {
         <body className="App-body">
           <p className="Warning-text">Tyvärr är brostatusen inte tillgänglig än, förhoppningsvis släpps den inom kort!</p>
           <div className="App-graph">
-          <LineChart
-            width={900}
-            height={450}
-            data={this.state.data}
-          >
-            <XAxis 
-              dataKey="timestamp"
-              type='number'
-              scale='time'
-              domain = {['auto', 'auto']}
-              tickFormatter={unix => formatXAxis(unix, this.state.interval) }
-              padding={{ left: 40, right: 40 }}
-              stroke="black"
-              style={{
-                fontSize: '0.8rem',
-                fontFamily: "Roboto, sans-serif",
-                fill: "white"
-            }}
-            />
-            <YAxis
-              type="category"
-              stroke="black"
-              tickFormatter={translateStatus}
-              padding={{ top: 40, bottom: 40 }}
-              style={{
-                fontSize: '0.8rem',
-                fontFamily: "Roboto, sans-serif",
-                fill: "white"
-            }}
-            />
-            <Line 
-              type="stepAfter" 
-              dataKey="status" 
-              stroke="#00ADB5"
-              strokeWidth={3}
-            />
-          </LineChart>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              width={900}
+              height={450}
+              data={this.state.data}
+            >
+              <XAxis 
+                dataKey="timestamp"
+                type='number'
+                scale='time'
+                domain = {['auto', 'auto']}
+                tickFormatter={unix => formatXAxis(unix, this.state.interval) }
+                padding={{ left: 40, right: 40 }}
+                stroke="black"
+                style={{
+                  fontSize: '0.8rem',
+                  fontFamily: "Roboto, sans-serif",
+                  fill: "white"
+              }}
+              />
+              <YAxis
+                type="category"
+                stroke="black"
+                tickFormatter={translateStatus}
+                padding={{ top: 40, bottom: 40 }}
+                style={{
+                  fontSize: '0.8rem',
+                  fontFamily: "Roboto, sans-serif",
+                  fill: "white"
+              }}
+              />
+              <Line 
+                type="stepAfter" 
+                dataKey="status" 
+                stroke="#00ADB5"
+                strokeWidth={3}
+              />
+            </LineChart>
+          </ResponsiveContainer>
           </div>
           <div className="App-buttons">
             <button className={this.state.interval === "24h" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("24h")}> 24h </button>
@@ -158,7 +160,7 @@ function translateStatus(status) {
   if (status === "Open") {
     return "Öppen"
   } else if (status === "Closed") {
-    return "Closed"
+    return "Stängd"
   }
   return "N/A"
 }
