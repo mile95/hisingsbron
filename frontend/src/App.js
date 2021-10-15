@@ -1,11 +1,15 @@
 import './App.css';
 import { LineChart, XAxis, YAxis, Line, ResponsiveContainer } from 'recharts';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 import React from 'react';
 
+import '@splidejs/splide/dist/css/splide.min.css';
 
 // let URL = String(process.env.REACT_APP_HOST_IP_ADDRESS);
-// let URL = "http://127.0.0.1:8000"
-let URL = "http://13.51.70.56"
+ let URL = "http://127.0.0.1:8000"
+ let ref = React.createRef()
+// let URL = "http://13.51.70.56"
+
 
 class App extends React.Component {
 
@@ -130,10 +134,26 @@ class App extends React.Component {
             </LineChart>
           </ResponsiveContainer>
           </div>
-          <div className="App-buttons">
-            <button className={this.state.interval === "24h" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("24h")}> 24h </button>
-            <button className={this.state.interval === "week" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("week")}> Vecka </button>
-            <button className={this.state.interval === "month" ? "App-button-selected" : "App-button" } onClick={() => this.changeIntervalState("month")}> Månad </button>
+          <div className="App-slider">
+          <Splide onMoved={ ( newIndex, prevIndex, destIndex ) => {
+            if (prevIndex === 0) {
+              this.changeIntervalState("24h")
+            } else if (prevIndex === 1) {
+              this.changeIntervalState("week")
+            } else {
+              this.changeIntervalState("month")
+            }
+          } }>
+            <SplideSlide>
+              <h4>Dygn</h4>
+            </SplideSlide>
+            <SplideSlide>
+              <h4>Vecka</h4>
+            </SplideSlide>
+            <SplideSlide>
+              <h4>Månad</h4>
+            </SplideSlide>
+          </Splide>
           </div>
         </body>
         <footer className="App-footer">
@@ -143,6 +163,7 @@ class App extends React.Component {
       </div>
     )
   }
+  
 }
 
 function formatXAxis(tickItem, interval) {
