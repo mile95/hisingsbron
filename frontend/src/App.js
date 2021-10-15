@@ -4,7 +4,8 @@ import React from 'react';
 
 
 // let URL = String(process.env.REACT_APP_HOST_IP_ADDRESS);
-let URL = "http://127.0.0.1:8000"
+// let URL = "http://127.0.0.1:8000"
+let URL = "http://13.51.70.56"
 
 class App extends React.Component {
 
@@ -87,7 +88,7 @@ class App extends React.Component {
           <h2>Hissingsbron</h2>
         </header>
         <body className="App-body">
-          <p className="Warning-text">Tyvärr är brostatusen inte tillgänglig än, förhoppningsvis släpps den inom kort!</p>
+          <p className="Warning-text">Den officiela brostatusen inte tillgänglig än. Använder fake data under tiden.</p>
           <div className="App-graph">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
