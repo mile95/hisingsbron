@@ -92,7 +92,7 @@ class App extends React.Component {
           <h2>Hissingsbron</h2>
         </header>
         <body className="App-body">
-          <p className="Warning-text">Den officiela brostatusen inte tillgänglig än. Använder fake data under tiden.</p>
+          <p className="Warning-text">OBS: Den officiela brostatusen inte tillgänglig än!</p>
           <div className="App-graph">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
