@@ -7,7 +7,6 @@ import '@splidejs/splide/dist/css/splide.min.css';
 
 // let URL = String(process.env.REACT_APP_HOST_IP_ADDRESS);
  let URL = "http://127.0.0.1:8000"
- let ref = React.createRef()
 // let URL = "http://13.51.70.56"
 
 
