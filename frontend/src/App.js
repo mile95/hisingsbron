@@ -145,7 +145,7 @@ class App extends React.Component {
         </body>
         <footer className="App-footer">
           <p>Created by Fredrik Mile, 2021</p>
-          <a href="https://github.com/mile95/hissingsbron">Source code available on Github!</a> 
+          <a href="https://github.com/mile95/hisingsbron">Source code available on Github!</a> 
         </footer>
       </div>
     )
