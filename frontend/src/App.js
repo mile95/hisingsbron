@@ -54,14 +54,14 @@ class App extends React.Component {
       interval: newInterval
     })
     var currentDate = new Date()
-
+    var ts = ""
     if (newInterval === "24h") {
-      var ts = new Date(currentDate.setDate(currentDate.getDate() - 1)).getTime()
+      ts = new Date(currentDate.setDate(currentDate.getDate() - 1)).getTime()
       this.setState({
         data: this.state.allData.filter(x => x.timestamp >= ts)
       })
     } else if (newInterval === "week") {
-      var ts = new Date(currentDate.setDate(currentDate.getDate() - 7)).getTime()
+      ts = new Date(currentDate.setDate(currentDate.getDate() - 7)).getTime()
       this.setState({
         data: this.state.allData.filter(x => x.timestamp >= ts)
       })

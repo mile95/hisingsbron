@@ -1,12 +1,10 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/30e1ada8-1dab-4e0f-ad0c-fb67e3228baf/deploy-status)](https://app.netlify.com/sites/hissingsbron/deploys)
 
-# Hissingsbron
-
-**www.hissingsbron.se**
+# Hisingsbron
 
 *Currently, the data from Göteborg Stad is not available so no data is shown*
 
-Web application for displaying the status new bridge connecting Hissingen with Göteborg, [hissingsbron](https://sv.wikipedia.org/wiki/Hisingsbron).
+Web application for displaying the status new bridge connecting Hisingen with Göteborg, [hisingsbron](https://sv.wikipedia.org/wiki/Hisingsbron).
 
 It visualizes whether and when the bridge was **open** or **closed** for the last
 - 24h
