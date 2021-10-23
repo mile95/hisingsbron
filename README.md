@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/30e1ada8-1dab-4e0f-ad0c-fb67e3228baf/deploy-status)](https://app.netlify.com/sites/hissingsbron/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/30e1ada8-1dab-4e0f-ad0c-fb67e3228baf/deploy-status)](https://app.netlify.com/sites/hisingsbron/deploys)
 
 # Hisingsbron
 
