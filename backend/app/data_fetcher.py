@@ -31,6 +31,4 @@ def fetch_data(db):
         store_status(db=next(db), timestamp=timestamp, status=status)
         LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
         LATEST_STATUS = status
-    else:
-        LOGGER.info("Ignored storing, no status change.")
 

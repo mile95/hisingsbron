@@ -17,33 +17,17 @@ class App extends React.Component {
     this.state = {
       interval: "24h"
     };
-    this.getStatus()
-      .then(response => response === "undefined" ? response.json() : undefined)
-      .then(data => this.setState({
-        status: data === "undefined" ? data.status : "N/A"
-      }));
-    this.changeIntervalState("24h");
-  }
-  
-  getStatus() {
-    return fetch(URL + "/current-status", {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *same-origin, omit
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow', // manual, *follow, error
-      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    })
-    .catch(error => {
-      console.log("Failed to fetch data.")
-    });
+    this.fetchDataForLastMonth();
   }
 
-  fetchDataBetweenDates(fromDate, toDate) {
-    fetch(URL + "/history?from_date=" + fromDate + "&to_date=" + toDate, {
+  fetchDataForLastMonth() {
+    var currentDate = new Date()
+    currentDate.setDate(currentDate.getDate() + 1)
+    var dateInHistory = new Date()
+    dateInHistory.setMonth(new Date().getMonth() - 1)
+    dateInHistory = dateInHistory.toJSON().slice(0,10).replace(/-/g,'-')
+    currentDate = currentDate.toJSON().slice(0,10).replace(/-/g,'-')
+    fetch(URL + "/history?from_date=" + dateInHistory + "&to_date=" + currentDate, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -54,11 +38,14 @@ class App extends React.Component {
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
     }).then(response => response.json())
-      .then(data => this.setState({
-        data: data.map(convertToMilis)
-      }))
+      .then(data => 
+        this.setState({allData: data.map(convertToMilis)},
+        function() { this.changeIntervalState("24h")})
+      ).then(
+        console.log(this.state),
+      )
       .catch(error => {
-        console.log("Failed to fetch data.")
+        console.log("Failed to fetch data.", error)
       });
   }
 
@@ -67,28 +54,29 @@ class App extends React.Component {
       interval: newInterval
     })
     var currentDate = new Date()
-    currentDate.setDate(currentDate.getDate() + 1)
-    var dateInHistory = new Date()
 
     if (newInterval === "24h") {
-      dateInHistory.setDate(new Date().getDate())
+      var ts = new Date(currentDate.setDate(currentDate.getDate() - 1)).getTime()
+      this.setState({
+        data: this.state.allData.filter(x => x.timestamp >= ts)
+      })
     } else if (newInterval === "week") {
-      dateInHistory.setDate(new Date().getDate() - 7)
+      var ts = new Date(currentDate.setDate(currentDate.getDate() - 7)).getTime()
+      this.setState({
+        data: this.state.allData.filter(x => x.timestamp >= ts)
+      })
     } else if (newInterval === "month") {
-      dateInHistory.setMonth(new Date().getMonth() - 1)
+      this.setState({
+        data: this.state.allData,
+      })
     }
-
-    this.fetchDataBetweenDates(
-      dateInHistory.toJSON().slice(0,10).replace(/-/g,'-'),
-      currentDate.toJSON().slice(0,10).replace(/-/g,'-')
-    )
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h2>Hissingsbron</h2>
+          <h2>Hisingsbron</h2>
         </header>
         <body className="App-body">
           <p className="Warning-text">OBS: Den officiela brostatusen inte tillgänglig än!</p>
@@ -162,7 +150,6 @@ class App extends React.Component {
       </div>
     )
   }
-  
 }
 
 function formatXAxis(tickItem, interval) {
