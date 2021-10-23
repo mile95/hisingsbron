@@ -13,16 +13,20 @@ LATEST_STATUS = None
 
 def fetch_data(db):
     global LATEST_STATUS
-    """
+    
     repsonse = requests.get(URL)
     if repsonse.status_code != 200:
         LOGGER.error("Failed to fetch current status")
         return
-    LOGGER.info(repsonse.json())
-    """
-    LOGGER.info("Fetching data")
+    if 'status' not in repsonse.json():
+        LOGGER.error("No status in repsonse") 
+        return
+    if repsonse.json().get('status') not in ["Open", "Closed"]:
+        LOGGER.error(f"Unexpected status: {status}")
+        return
+
+    status = repsonse.json().get('status')
     timestamp = datetime.datetime.now()
-    status = generate_fake_data()
     if status != LATEST_STATUS:
         store_status(db=next(db), timestamp=timestamp, status=status)
         LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
@@ -30,8 +34,3 @@ def fetch_data(db):
     else:
         LOGGER.info("Ignored storing, no status change.")
 
-
-def generate_fake_data():
-    if randrange(10) < 3:
-        return "Closed"
-    return "Open"
