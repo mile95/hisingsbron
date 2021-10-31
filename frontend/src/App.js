@@ -5,10 +5,7 @@ import React from 'react';
 
 import '@splidejs/splide/dist/css/splide.min.css';
 
-// let URL = String(process.env.REACT_APP_HOST_IP_ADDRESS);
- let URL = "http://127.0.0.1:8000"
-// let URL = "http://13.51.70.56"
-
+let URL = "https://hisingsbron.freedynamicdns.org/"
 
 class App extends React.Component {
 
@@ -79,7 +76,6 @@ class App extends React.Component {
           <h2>Hisingsbron</h2>
         </header>
         <body className="App-body">
-          <p className="Warning-text">OBS: Den officiela brostatusen inte tillgänglig än!</p>
           <div className="App-graph">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
