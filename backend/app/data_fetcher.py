@@ -9,10 +9,12 @@ URL = "https://n400itshfa000002-development-apim.azure-api.net/RoadSignals?subsc
 LOGGER = logging.getLogger(__name__)
 
 LATEST_STATUS = None
+LATEST_TIMESTAMP = None
 
 
 def fetch_data(db):
     global LATEST_STATUS
+    global LATEST_TIMESTAMP
     
     repsonse = requests.get(URL)
     if repsonse.status_code != 200:
@@ -26,9 +28,10 @@ def fetch_data(db):
         return
 
     status = repsonse.json().get('status')
-    timestamp = datetime.datetime.now()
-    if status != LATEST_STATUS:
+    timestamp = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+    if status != LATEST_STATUS or (LATEST_TIMESTAMP < timestamp - datetime.timedelta(hours=1)):
         store_status(db=next(db), timestamp=timestamp, status=status)
         LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
         LATEST_STATUS = status
+        LATEST_TIMESTAMP = timestamp
 

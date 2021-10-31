@@ -13,7 +13,7 @@ It visualizes whether and when the bridge was **open** or **closed** for the las
 
 I develop this web application with the goal of learning:
 - Web development using React.
-- Continuous deployment of docker containers to AWS ECR and running them in AWS ECS.
+- Setting up an AWS ECS instance and running the backend in there.
 - Deployment and DNS configuration of a website.
 
 
@@ -23,7 +23,10 @@ I develop this web application with the goal of learning:
         - `/current-status` - Get latest status.
         - `/history` - Get historical data between two dates.
     - SQLite db storing timestamps when the status changes.
-    - (Not yet automated) Stored as a container image in `AWS ECR` and hosted in `AWS ECS`
+    - Available as docker image in [dockerhub](https://hub.docker.com/repository/docker/fredrikmile/hisingsbron) which runs in an EC2.
+    - The EC2 uses [Frontman](https://github.com/Sundin/frontman) as reverse proxy.
+    - The backend uses [noip](https://www.noip.com/) for dynamic DNS
+    - Start command for backend: `docker run -d -p 8888:80 -e MAX_WORKERS="1" fredrikmile/hisingsbron:latest`
 - **Frontend**:
     - React App
     - Hosted using [netlify](https://www.netlify.com/) 
@@ -67,10 +70,10 @@ cd frontend && npm install
 
 ### Start the frontend
 ```
-REACT_APP_HOST_IP_ADDRESS=http://localhost:8000 npm start
+npm start
 ```
 
-## Run it using Docker
+## Run application using Docker
 
 ### Frontend
 
