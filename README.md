@@ -1,5 +1,7 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/30e1ada8-1dab-4e0f-ad0c-fb67e3228baf/deploy-status)](https://app.netlify.com/sites/hisingsbron/deploys)
 
+Available here: https://hisingsbron.netlify.app
+
 # Hisingsbron
 
 *Currently, the data from Göteborg Stad is not available so no data is shown*
