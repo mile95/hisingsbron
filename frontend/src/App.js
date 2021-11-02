@@ -1,5 +1,5 @@
 import './App.css';
-import { LineChart, XAxis, YAxis, Line, ResponsiveContainer } from 'recharts';
+import { LineChart, XAxis, YAxis, Line, ResponsiveContainer} from 'recharts';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import React from 'react';
 
@@ -152,10 +152,10 @@ function formatXAxis(tickItem, interval) {
   var date = new Date(tickItem)
   var formattedDate = ""
   if (interval === "24h") {
-    formattedDate = date.getHours() + ':' + date.getMinutes();
+    formattedDate = date.toISOString().slice(11,16)
   }
   else {
-    formattedDate = (date.getMonth() + 1)+ '/' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
+    formattedDate = (date.getMonth() + 1)+ '/' + date.getDate() + " " + date.toISOString().slice(11,16)
   }
   return String(formattedDate)
 }
