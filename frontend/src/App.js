@@ -1,5 +1,5 @@
 import './App.css';
-import { LineChart, XAxis, YAxis, Line, ResponsiveContainer} from 'recharts';
+import { LineChart, XAxis, YAxis, Line, ResponsiveContainer, Tooltip} from 'recharts';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import React from 'react';
 
@@ -69,6 +69,18 @@ class App extends React.Component {
     }
   }
 
+  CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${formatXAxis(label, "month")} : ${translateStatus(payload[0].value)}`}</p>
+          <p className="intro">{''}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   render() {
     return (
       <div className="App">
@@ -80,7 +92,7 @@ class App extends React.Component {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               width={900}
-              height={450}
+              height={800}
               data={this.state.data}
             >
               <XAxis 
@@ -88,8 +100,8 @@ class App extends React.Component {
                 type='number'
                 scale='time'
                 domain = {['auto', 'auto']}
-                tickFormatter={unix => formatXAxis(unix, this.state.interval) }
-                padding={{ left: 40, right: 40 }}
+                tickFormatter={unix => formatXAxis(unix, "24h") }
+                // padding={{ left: 0, right: 40 }}
                 stroke="black"
                 style={{
                   fontSize: '0.8rem',
@@ -101,13 +113,14 @@ class App extends React.Component {
                 type="category"
                 stroke="black"
                 tickFormatter={translateStatus}
-                padding={{ top: 40, bottom: 40 }}
+                padding={{ top: 0, bottom: 0 }}
                 style={{
                   fontSize: '0.8rem',
                   fontFamily: "Roboto, sans-serif",
                   fill: "white"
               }}
               />
+              <Tooltip content={<this.CustomTooltip />} />
               <Line 
                 type="stepAfter" 
                 dataKey="status" 
