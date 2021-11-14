@@ -113,7 +113,7 @@ class App extends React.Component {
                 type="category"
                 stroke="black"
                 tickFormatter={translateStatus}
-                padding={{ top: 0, bottom: 0 }}
+                padding={{ top: 20, bottom: 20 }}
                 style={{
                   fontSize: '0.8rem',
                   fontFamily: "Roboto, sans-serif",
