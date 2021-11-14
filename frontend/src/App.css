@@ -42,6 +42,42 @@
   padding-right: 15px;
 }
 
+/* Float four columns side by side */
+.App-info-container {
+  float: center;
+  padding: 40px 10px;
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.App-info-container-row {
+  margin: 0 -5px;
+  display: flex;
+  align-items: left;
+}
+
+/* Clear floats after the columns */
+.App-info-container-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.App-info-container-item {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #00ADB5;
+  color:#EEEEEE;
+}
+
+@media screen and (max-width: 600px) {
+  .App-info-container {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
 .App-footer {
   position:absolute;
   bottom:0;

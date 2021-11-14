@@ -36,7 +36,7 @@ class App extends React.Component {
     }).then(response => response.json())
       .then(data => 
         this.setState({allData: data.map(convertToMilis)},
-        function() { this.filter24hData()})
+        function() { this.splitData()})
       ).then(
         console.log(this.state),
       )
@@ -45,12 +45,15 @@ class App extends React.Component {
       });
   }
 
-  filter24hData() {
+  splitData() {
     var currentDate = new Date()
-    var ts = ""
-    ts = new Date(currentDate.setDate(currentDate.getDate() - 1)).getTime()
+    var ts = new Date(currentDate.setDate(currentDate.getDate() - 1)).getTime()
+    var ts_week = new Date(currentDate.setDate(currentDate.getDate() - 7)).getTime()
     this.setState({
-      data: this.state.allData.filter(x => x.timestamp >= ts)
+      data: this.state.allData.filter(x => x.timestamp >= ts),
+      count_day: this.state.allData.filter(x => x.timestamp >= ts && x.status === "Closed").length,
+      count_week: this.state.allData.filter(x => x.timestamp >= ts_week && x.status === "Closed").length,
+      count_month: this.state.allData.filter(x => x.status === "Closed").length
     })
   }
 
@@ -110,6 +113,26 @@ class App extends React.Component {
               />
             </LineChart>
           </ResponsiveContainer>
+          </div>
+          <div className="App-info-container-row">
+            <div className="App-info-container">
+              <div className="App-info-container-item">
+                <p># Öpningar senaste dygnet</p>
+                <p> {this.state.count_day} </p>
+              </div>
+            </div>
+            <div className="App-info-container">
+              <div className="App-info-container-item">
+                <p># Öpningar senaste veckan</p>
+                <p> {this.state.count_week} </p>
+              </div>
+            </div>
+            <div className="App-info-container">
+              <div className="App-info-container-item">
+                <p># Öpningar senaste månaden</p>
+                <p> {this.state.count_month} </p>
+              </div>
+            </div>
           </div>
         </body>
         <footer className="App-footer">
