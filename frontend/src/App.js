@@ -1,6 +1,5 @@
 import './App.css';
 import { LineChart, XAxis, YAxis, Line, ResponsiveContainer, Tooltip} from 'recharts';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
 import React from 'react';
 
 import '@splidejs/splide/dist/css/splide.min.css';
@@ -37,7 +36,7 @@ class App extends React.Component {
     }).then(response => response.json())
       .then(data => 
         this.setState({allData: data.map(convertToMilis)},
-        function() { this.changeIntervalState("24h")})
+        function() { this.filter24hData()})
       ).then(
         console.log(this.state),
       )
@@ -46,27 +45,13 @@ class App extends React.Component {
       });
   }
 
-  changeIntervalState(newInterval) {
-    this.setState({
-      interval: newInterval
-    })
+  filter24hData() {
     var currentDate = new Date()
     var ts = ""
-    if (newInterval === "24h") {
-      ts = new Date(currentDate.setDate(currentDate.getDate() - 1)).getTime()
-      this.setState({
-        data: this.state.allData.filter(x => x.timestamp >= ts)
-      })
-    } else if (newInterval === "week") {
-      ts = new Date(currentDate.setDate(currentDate.getDate() - 7)).getTime()
-      this.setState({
-        data: this.state.allData.filter(x => x.timestamp >= ts)
-      })
-    } else if (newInterval === "month") {
-      this.setState({
-        data: this.state.allData,
-      })
-    }
+    ts = new Date(currentDate.setDate(currentDate.getDate() - 1)).getTime()
+    this.setState({
+      data: this.state.allData.filter(x => x.timestamp >= ts)
+    })
   }
 
   CustomTooltip = ({ active, payload, label }) => {
@@ -88,20 +73,16 @@ class App extends React.Component {
           <h2>Hisingsbron</h2>
         </header>
         <body className="App-body">
+          <p>Senaste 24h</p>
           <div className="App-graph">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={900}
-              height={800}
-              data={this.state.data}
-            >
+            <LineChart data={this.state.data}>
               <XAxis 
                 dataKey="timestamp"
                 type='number'
                 scale='time'
                 domain = {['auto', 'auto']}
                 tickFormatter={unix => formatXAxis(unix, "24h") }
-                // padding={{ left: 0, right: 40 }}
                 stroke="black"
                 style={{
                   fontSize: '0.8rem',
@@ -129,27 +110,6 @@ class App extends React.Component {
               />
             </LineChart>
           </ResponsiveContainer>
-          </div>
-          <div className="App-slider">
-          <Splide onMoved={ ( newIndex, prevIndex, destIndex ) => {
-            if (prevIndex === 0) {
-              this.changeIntervalState("24h")
-            } else if (prevIndex === 1) {
-              this.changeIntervalState("week")
-            } else {
-              this.changeIntervalState("month")
-            }
-          } }>
-            <SplideSlide>
-              <h4>Dygn</h4>
-            </SplideSlide>
-            <SplideSlide>
-              <h4>Vecka</h4>
-            </SplideSlide>
-            <SplideSlide>
-              <h4>Månad</h4>
-            </SplideSlide>
-          </Splide>
           </div>
         </body>
         <footer className="App-footer">

@@ -30,19 +30,16 @@
   color: #EEEEEE;
 }
 
+.App-body p {
+  margin: 0;
+  font-size: calc(1px + 2vmin);
+}
+
 .App-graph {
   height: 30vh;
   width: 98vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   color: #EEEEEE;
-}
-
-.App-slider {
-  margin-top: none;
-  padding-top: none;
+  padding-right: 15px;
 }
 
 .App-footer {
