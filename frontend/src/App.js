@@ -117,19 +117,19 @@ class App extends React.Component {
           <div className="App-info-container-row">
             <div className="App-info-container">
               <div className="App-info-container-item">
-                <p># Öpningar senaste dygnet</p>
+                <p># Stängningar senaste 24h</p>
                 <p> {this.state.count_day} </p>
               </div>
             </div>
             <div className="App-info-container">
               <div className="App-info-container-item">
-                <p># Öpningar senaste veckan</p>
+                <p># Stängningar senaste veckan</p>
                 <p> {this.state.count_week} </p>
               </div>
             </div>
             <div className="App-info-container">
               <div className="App-info-container-item">
-                <p># Öpningar senaste månaden</p>
+                <p># Stängningar senaste månaden</p>
                 <p> {this.state.count_month} </p>
               </div>
             </div>
