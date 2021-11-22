@@ -2,14 +2,19 @@ from sqlalchemy.orm import Session
 from datetime import date
 
 from models import Status
+from database2 import write_record
 
-
+"""
 def store_status(db: Session, timestamp: str, status: str):
     db_status = Status(timestamp=timestamp, status=status)
     db.add(db_status)
     db.commit()
     db.refresh(db_status)
     return db_status
+"""
+
+def store_status(timestamp: str, status: str):
+    write_record(timestamp, status)
 
 
 def get_latest_status(db: Session):

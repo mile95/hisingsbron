@@ -32,7 +32,7 @@ def fetch_data(db):
     if status != LATEST_STATUS or (
         LATEST_TIMESTAMP < timestamp - datetime.timedelta(hours=1)
     ):
-        store_status(db=next(db), timestamp=timestamp, status=status)
+        store_status(timestamp=timestamp.timestamp(), status=status)
         LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
         LATEST_STATUS = status
         LATEST_TIMESTAMP = timestamp
