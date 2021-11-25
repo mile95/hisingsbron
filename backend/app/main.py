@@ -9,7 +9,7 @@ from datetime import date
 from data_fetcher import fetch_data
 from models import Base
 from database import engine, SessionLocal
-from crud import get_history_between_dates, get_latest_status
+from crud import get_history_between_dates, get_latest_status, get_historical_records
 
 Base.metadata.create_all(bind=engine)
 setup_logging()
@@ -45,7 +45,7 @@ app.add_middleware(
 @app.on_event("startup")
 @repeat_every(seconds=5, raise_exceptions=True)
 def startup_event():
-    fetch_data(get_db())
+    fetch_data()
 
 
 @app.get("/current-status")
@@ -58,3 +58,8 @@ def get_history(from_date: date, to_date: date, db: Session = Depends(get_db)):
     # Example 2021-09-05T18:19:04Z
     # Example 2021-09-05T20:19:04+02:00
     return get_history_between_dates(db=db, from_date=from_date, to_date=to_date)
+
+@app.get("/db")
+def get_history2(time_since):
+    get_historical_records(time_since)
+    return ":)"

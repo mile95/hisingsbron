@@ -12,7 +12,7 @@ LATEST_STATUS = None
 LATEST_TIMESTAMP = None
 
 
-def fetch_data(db):
+def fetch_data():
     global LATEST_STATUS
     global LATEST_TIMESTAMP
 

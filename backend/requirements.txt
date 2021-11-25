@@ -4,3 +4,4 @@ requests
 uvicorn
 sqlalchemy
 pytest
+boto3

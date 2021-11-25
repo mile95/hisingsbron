@@ -9,22 +9,18 @@ SESSION = boto3.Session()
 DATABASE_NAME = "hisingsbridge"
 TABLE_NAME = "hisingsbridge"
 
-CLIENT_WRITE = SESSION.client(
-    'timestream-write',
-    config=Config(
-        read_timeout=20, max_pool_connections=5000, retries={"max_attempts": 10}
-    )
+CLIENT_CONFIG = Config(
+    read_timeout=20, max_pool_connections=5000, retries={"max_attempts": 10}
 )
 
-CLIENT_QUERY  = SESSION.client("timestream-query")
+CLIENT_WRITE = SESSION.client("timestream-write", config=CLIENT_CONFIG)
 
+CLIENT_QUERY = SESSION.client("timestream-query")
 
 def write_record(timestamp, value):
     LOGGER.info("Writing records")
     dimensions = [
-        {
-            "Name": "bridge", "Value": "hisingsbron"
-        },
+        {"Name": "bridge", "Value": "hisingsbron"},
     ]
     records = [
         {
@@ -32,7 +28,7 @@ def write_record(timestamp, value):
             "MeasureName": "HisingsbridgeStatus",
             "MeasureValue": value,
             "MeasureValueType": "VARCHAR",
-            "Time": str(int(timestamp)*1000),
+            "Time": str(int(timestamp) * 1000),
         }
     ]
 
@@ -48,3 +44,13 @@ def write_record(timestamp, value):
     except CLIENT_WRITE.exceptions.RejectedRecordsException as err:
         LOGGER.exception("Failed to write to database")
 
+
+def run_query(sql_query):
+    pages = []
+    try:
+        page_iterator = CLIENT_QUERY.get_paginator('query').paginate(QueryString=sql_query)
+        for page in page_iterator:
+            pages.append(page)
+    except Exception as err:
+        print("Exception while running query:", err)
+    return pages
