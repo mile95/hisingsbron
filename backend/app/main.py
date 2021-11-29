@@ -7,22 +7,9 @@ from sqlalchemy.orm import Session
 from logger import setup_logging
 from datetime import date
 from data_fetcher import fetch_data
-from models import Base
-from database import engine, SessionLocal
-from crud import get_history_between_dates, get_latest_status, get_historical_records
+from crud import get_historical_records, get_latest_status
 
-Base.metadata.create_all(bind=engine)
 setup_logging()
-
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 app = FastAPI()
 
@@ -49,17 +36,12 @@ def startup_event():
 
 
 @app.get("/current-status")
-def get_current_status(db: Session = Depends(get_db)):
-    return get_latest_status(db=db)
+def get_current_status():
+    return get_latest_status()
 
 
 @app.get("/history")
-def get_history(from_date: date, to_date: date, db: Session = Depends(get_db)):
-    # Example 2021-09-05T18:19:04Z
-    # Example 2021-09-05T20:19:04+02:00
-    return get_history_between_dates(db=db, from_date=from_date, to_date=to_date)
-
-@app.get("/db")
-def get_history2(time_since):
-    get_historical_records(time_since)
-    return ":)"
+def get_history(time_since):
+    # Example 30d
+    # Example 1w
+    return get_historical_records(time_since)
