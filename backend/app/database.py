@@ -18,7 +18,7 @@ CLIENT_WRITE = SESSION.client("timestream-write", config=CLIENT_CONFIG)
 CLIENT_QUERY = SESSION.client("timestream-query")
 
 def write_record(timestamp, value):
-    LOGGER.info("Writing records")
+    LOGGER.info(f"Writing records: {timestamp * 1000},{value}")
     dimensions = [
         {"Name": "bridge", "Value": "hisingsbron"},
     ]
@@ -43,6 +43,7 @@ def write_record(timestamp, value):
         LOGGER.info(f"Writing ended with status {result_status_code}")
     except CLIENT_WRITE.exceptions.RejectedRecordsException as err:
         LOGGER.exception("Failed to write to database")
+        LOGGER.exception(err.response)
 
 
 def run_query(sql_query):

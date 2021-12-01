@@ -24,15 +24,18 @@ def fetch_data():
         LOGGER.error("No status in repsonse")
         return
     if repsonse.json().get("status") not in ["Open", "Closed"]:
-        LOGGER.error(f"Unexpected status: {status}")
+        LOGGER.error(f"Unexpected status")
         return
 
     status = repsonse.json().get("status")
-    timestamp = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+    timestamp = datetime.datetime.utcnow()
     if status != LATEST_STATUS or (
         LATEST_TIMESTAMP < timestamp - datetime.timedelta(hours=1)
     ):
-        store_status(timestamp=timestamp.timestamp(), status=status)
-        LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
+        store_status_success = store_status(timestamp=timestamp.timestamp(), status=status)
+        if store_status_success:
+            LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
+        else:
+            LOGGER.warn(f"Falied to store data: Timestamp: {timestamp}, Status: {status}")
         LATEST_STATUS = status
         LATEST_TIMESTAMP = timestamp
