@@ -4,8 +4,7 @@ import React from 'react';
 
 import '@splidejs/splide/dist/css/splide.min.css';
 
-//let URL = "https://hisingsbron.freedynamicdns.org/"
-let URL = "http://127.0.0.1:8000"
+let URL = "https://hisingsbron.freedynamicdns.org/"
 
 class App extends React.Component {
 
@@ -162,6 +161,8 @@ function translateStatus(status) {
 
 function convertToMilis(entry) {
   var date = new Date(entry.timestamp)
+  // UTC +2
+  date.setHours(date.getHours() + 2)
   return {
     timestamp: date.getTime(),
     status: entry.status

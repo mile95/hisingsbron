@@ -1,4 +1,7 @@
-# https://github.com/awslabs/amazon-timestream-tools/blob/30558f8134828cc15d1fb50f9b762ccc6b319f1b/sample_apps/python/CrudAndSimpleIngestionExample.py#L5
+"""
+Script for moving old data to new timestream database
+"""
+
 
 import requests
 import boto3
@@ -20,7 +23,7 @@ write_client = session.client(
 )
 
 def get_data_to_write():
-    response = requests.get("https://hisingsbron.freedynamicdns.org//history?from_date=2021-01-01&to_date=2021-12-24")
+    response = requests.get("https://hisingsbron.freedynamicdns.org//history?from_date=2021-12-01&to_date=2021-12-03")
     return response.json()
 
 
@@ -60,13 +63,5 @@ def write_records(entries):
             print(err)
         except Exception as err:
             print("Error:", err)
-
-
-
-#entries = get_data_to_write()
-
-ts = "2021-11-04T04:44:21.290729"
-print(datetime.fromisoformat(ts).timestamp())
-
 
 write_records(get_data_to_write())
