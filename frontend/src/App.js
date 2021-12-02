@@ -76,7 +76,7 @@ class App extends React.Component {
           <h2>Hisingsbron</h2>
         </header>
         <body className="App-body">
-          <p>Senaste 24h</p>
+          <p>Brostatus senaste 24h</p>
           <div className="App-graph">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={this.state.data}>
@@ -116,20 +116,20 @@ class App extends React.Component {
           </div>
           <div className="App-info-container-row">
             <div className="App-info-container">
-              <div className="App-info-container-item">
-                <p># Öpningar senaste dygnet</p>
+              <div className="App-info-container-item-left">
+                <p># Stängningar senaste 24h</p>
                 <p> {this.state.count_day} </p>
               </div>
             </div>
             <div className="App-info-container">
-              <div className="App-info-container-item">
-                <p># Öpningar senaste veckan</p>
+              <div className="App-info-container-item-center">
+                <p># Stängningar senaste veckan</p>
                 <p> {this.state.count_week} </p>
               </div>
             </div>
             <div className="App-info-container">
-              <div className="App-info-container-item">
-                <p># Öpningar senaste månaden</p>
+              <div className="App-info-container-item-right">
+                <p># Stängningar senaste 30 dagarna</p>
                 <p> {this.state.count_month} </p>
               </div>
             </div>

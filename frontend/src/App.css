@@ -62,12 +62,29 @@
   clear: both;
 }
 
-.App-info-container-item {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+.App-info-container-item-left {
   padding: 16px;
   text-align: center;
-  background-color: #00ADB5;
-  color:#EEEEEE;
+  background-color: transparent;
+  border-left: solid 2px black;
+  color:greenyellow;
+}
+
+.App-info-container-item-center {
+  padding: 16px;
+  text-align: center;
+  background-color: transparent;
+  border-right: solid 2px black;
+  border-left: solid 2px black;
+  color:greenyellow;
+}
+
+.App-info-container-item-right {
+  padding: 16px;
+  text-align: center;
+  background-color: transparent;
+  border-right: solid 2px black;
+  color:greenyellow;
 }
 
 @media screen and (max-width: 600px) {
