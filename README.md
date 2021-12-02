@@ -96,6 +96,16 @@ Visible on 127.0.0.1:3001
 
 
 ### Backend
+
+Create the `.env` file containing:
+
+```
+AWS_ACCESS_KEY_ID=xxx
+AWS_SECRET_ACCESS_KEY=xxx
+AWS_DEFAULT_REGION=xxx
+MAX_WORKERS=1
+```
+
 ```
 cd backend
 docker build -t backend:dev .

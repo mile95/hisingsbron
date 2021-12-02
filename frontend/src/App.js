@@ -17,13 +17,7 @@ class App extends React.Component {
   }
 
   fetchDataForLastMonth() {
-    var currentDate = new Date()
-    currentDate.setDate(currentDate.getDate() + 1)
-    var dateInHistory = new Date()
-    dateInHistory.setMonth(new Date().getMonth() - 1)
-    dateInHistory = dateInHistory.toJSON().slice(0,10).replace(/-/g,'-')
-    currentDate = currentDate.toJSON().slice(0,10).replace(/-/g,'-')
-    fetch(URL + "/history?from_date=" + dateInHistory + "&to_date=" + currentDate, {
+    fetch(URL + "/history?time_since=30d", {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -151,7 +145,7 @@ function formatXAxis(tickItem, interval) {
     formattedDate = date.toISOString().slice(11,16)
   }
   else {
-    formattedDate = (date.getMonth() + 1)+ '/' + date.getDate() + " " + date.toISOString().slice(11,16)
+    formattedDate = date.getDate() + '/' + (date.getMonth() + 1) + " " + date.toISOString().slice(11,16)
   }
   return String(formattedDate)
 }
@@ -167,6 +161,8 @@ function translateStatus(status) {
 
 function convertToMilis(entry) {
   var date = new Date(entry.timestamp)
+  // UTC +2
+  date.setHours(date.getHours() + 2)
   return {
     timestamp: date.getTime(),
     status: entry.status

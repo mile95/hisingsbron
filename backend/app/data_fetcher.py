@@ -12,26 +12,30 @@ LATEST_STATUS = None
 LATEST_TIMESTAMP = None
 
 
-def fetch_data(db):
+def fetch_data():
     global LATEST_STATUS
     global LATEST_TIMESTAMP
-    
+
     repsonse = requests.get(URL)
     if repsonse.status_code != 200:
         LOGGER.error("Failed to fetch current status")
         return
-    if 'status' not in repsonse.json():
-        LOGGER.error("No status in repsonse") 
+    if "status" not in repsonse.json():
+        LOGGER.error("No status in repsonse")
         return
-    if repsonse.json().get('status') not in ["Open", "Closed"]:
-        LOGGER.error(f"Unexpected status: {status}")
+    if repsonse.json().get("status") not in ["Open", "Closed"]:
+        LOGGER.error(f"Unexpected status")
         return
 
-    status = repsonse.json().get('status')
-    timestamp = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-    if status != LATEST_STATUS or (LATEST_TIMESTAMP < timestamp - datetime.timedelta(hours=1)):
-        store_status(db=next(db), timestamp=timestamp, status=status)
-        LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
+    status = repsonse.json().get("status")
+    timestamp = datetime.datetime.utcnow()
+    if status != LATEST_STATUS or (
+        LATEST_TIMESTAMP < timestamp - datetime.timedelta(hours=1)
+    ):
+        store_status_success = store_status(timestamp=timestamp.timestamp(), status=status)
+        if store_status_success:
+            LOGGER.info(f"Stored data: Timestamp: {timestamp}, Status: {status}")
+        else:
+            LOGGER.warn(f"Falied to store data: Timestamp: {timestamp}, Status: {status}")
         LATEST_STATUS = status
         LATEST_TIMESTAMP = timestamp
-
